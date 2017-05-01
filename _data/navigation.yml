@@ -1,7 +1,7 @@
 # main links
 main:
   - title: "Quick-Start Guide"
-    url: https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/
+    url: /docs/quick-start-guide/
   # - title: "About"
   #   url: https://mmistakes.github.io/minimal-mistakes/about/
   # - title: "Sample Posts"
@@ -10,3 +10,16 @@ main:
   #   url: /collection-archive/
   # - title: "Sitemap"
   #   url: /sitemap/
+
+docs:
+  - title: "Getting Started"
+    children:
+      - title: "Quick-Start Guide"
+        url: /docs/quick-start-guide/
+
+  - title: "Reference"
+    children:
+      - title: "Matching Scalar Values"
+        url: /docs/scalar/
+      - title: "Matching Arrays"
+        url: /docs/array/
