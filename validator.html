@@ -1,0 +1,129 @@
+---
+title: "Online JSON Blueprint Validator"
+layout: splash
+permalink: /validator
+author_profile: false
+---
+
+{% raw  %}
+
+<div id="app" style="font-size: 0.75em;">
+    <p><sample-select :samples="samples" @selected="showSample" /></p>
+
+    <div class="editors">
+        <editor mode="ace/mode/json_blueprint" language-label="JSON Blueprint" :text.sync="schema"></editor>
+        <editor mode="ace/mode/json" language-label="JSON" :text.sync="json"></editor>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.3/vue.js" type="text/javascript" charset="utf-8"></script>
+<script src="/assets/js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/x-template" id="sample-select">
+  <span class="dropdown" :class="{ open: isOpen }">
+      <button @click="toggleOpen">Samples</button>
+      <ul>
+          <li v-for="sample in samples" @click="select(sample)">{{ sample.name }}</li>
+      </ul>
+  </span>
+</script>
+
+<script type="text/x-template" id="editor">
+    <div class="editor__container">
+        <div class="language">{{ languageLabel }}</div>
+        <div class="editor">{{ text }}</div>
+    </div>
+</script>
+
+<script>
+    var samples = [{
+        name: 'Trivial',
+        schema: 'Root = Boolean',
+        json: 'true'
+    }, {
+        name: 'Array',
+        schema: 'Root = [Int, String]',
+        json: '[42, "the ultimate answer"]'
+    }]
+
+    Vue.component('sample-select', {
+        template: '#sample-select',
+        props: ['samples'],
+        data: function() {
+            return {
+                isOpen: false
+            }
+        },
+        methods: {
+            toggleOpen: function() {
+                this.isOpen = !this.isOpen
+            },
+            select: function(sample) {
+                this.isOpen = false
+                this.$emit('selected', sample)
+            }
+        },
+        mounted: function() {
+            self.closeListener = $(document).on('click', function(e) {
+                if (!$(e.target).closest(".dropdown").length) {
+                    this.isOpen = false
+                }
+            }.bind(this))
+        },
+        beforeDestroy: function() {
+            if (this.closeListener) {
+                $(document).off('click', this.closeListener)
+            }
+        }
+    })
+
+    Vue.component('editor', {
+        template: '#editor',
+        props: ['mode', 'text', 'languageLabel'],
+        mounted: function() {
+            var editorEl = $('.editor', this.$el)[0]
+            this.ace = ace.edit(editorEl)
+            this.ace.$blockScrolling = Infinity
+            this.ace.setTheme('ace/theme/idle_fingers')
+            
+            var session = this.ace.getSession();
+            session.setMode(this.mode)
+            var doc = session.getDocument()
+
+            doc.on('change', function(e) {
+                if (this.clearTypingStatus) {
+                    clearTimeout(this.clearTypingStatus)
+                }
+                this.clearTypingStatus = setTimeout(function() {
+                    this.typing = false
+                    this.clearTypingStatus = null
+                }.bind(this), 10)
+                this.typing = true
+                
+                this.$emit('update:text', doc.getValue())
+            }.bind(this))
+        },
+        watch: {
+            text: function(newVal) {
+                if (this.ace && !this.typing) {
+                    this.ace.getSession().getDocument().setValue(newVal)
+                }
+            }
+        }
+    })
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            samples: samples,
+            schema: samples[0].schema,
+            json: samples[0].json
+        },
+        methods: {
+            showSample: function(sample) {
+                this.schema = sample.schema
+                this.json = sample.json
+            }
+        }
+    })
+</script>

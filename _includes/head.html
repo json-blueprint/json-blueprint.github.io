@@ -16,6 +16,10 @@
 <!-- For all browsers -->
 <link rel="stylesheet" href="{{ '/assets/css/main.css' | absolute_url }}">
 
+{% for css_name in page.extra_css %}
+    <link rel="stylesheet" href="{{ css_name }}">
+{% endfor %}
+
 <!--[if lte IE 9]>
   <style>
     /* old IE unsupported flexbox fixes */

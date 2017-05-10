@@ -1,7 +1,9 @@
 # main links
 main:
-  - title: "Quick-Start Guide"
+  - title: "Documentation"
     url: /docs/quick-start-guide/
+  - title: "Validator"
+    url: /validator
   # - title: "About"
   #   url: https://mmistakes.github.io/minimal-mistakes/about/
   # - title: "Sample Posts"

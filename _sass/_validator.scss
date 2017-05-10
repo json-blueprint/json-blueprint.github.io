@@ -1,0 +1,114 @@
+/* ==========================================================================
+   VALIDATOR
+   ========================================================================== */
+
+.editors {
+  @include clearfix();
+}
+
+.editor__wrapper {
+    @include clearfix();
+    margin-bottom: 2em;
+}
+
+.editor__container {
+    position: relative;
+
+    @include breakpoint($small) {
+        margin-bottom: 0;
+        @include gallery(6 of 12);
+    }
+
+    .language {
+        position: absolute;
+        bottom: 0.5em;
+        right: 0.5em;
+        color: white;
+        z-index: 10;
+        opacity: 0.3;
+    }
+}
+
+.editor {
+    height: 30em;
+    margin-top: 1em;
+}
+
+/* ==========================================================================
+   CSS Dropdown
+   ========================================================================== */
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  z-index: 10;
+}
+
+.dropdown > a, .dropdown > button {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 6px 20px 6px 10px;
+  border-radius: 4px;
+  display: inline-block;
+  color: black;
+  text-decoration: none;
+}
+
+.dropdown > a:before, .dropdown > button:before {
+  position: absolute;
+  right: 7px;
+  top: 12px;
+  content: ' ';
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid black;
+}
+
+.dropdown ul {
+  position: absolute;
+  top: 18px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  left: 0px;
+  list-style: none;
+  padding: 4px 0px;
+  display: none;
+  background-color: white;
+  box-shadow: 0 3px 6px rgba(0,0,0,.175);
+}
+
+.dropdown.open ul {
+  display: block;
+}
+
+.dropdown ul li {
+  display: block;
+  margin: 0;
+  padding: 2px 20px;
+  white-space: nowrap;
+  min-width: 100px;
+}
+
+.dropdown ul li:hover {
+  background-color: #F5F5F5;
+  cursor: pointer;
+}
+
+.dropdown ul li a {
+  text-decoration: none;
+  display: block;
+  color: black
+}
+
+.dropdown .divider {
+  height: 1px;
+  margin: 9px 0;
+  overflow: hidden;
+  background-color: #e5e5e5;
+  font-size: 1px;
+  padding: 0;
+}
