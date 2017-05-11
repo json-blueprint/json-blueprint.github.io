@@ -7,16 +7,53 @@ author_profile: false
 
 {% raw  %}
 
-<div id="app" style="font-size: 0.75em;">
+<div id="app">
     <p><sample-select :samples="samples" @selected="showSample" /></p>
 
     <div class="editors">
         <editor mode="ace/mode/json_blueprint" language-label="JSON Blueprint" :text.sync="schema"></editor>
         <editor mode="ace/mode/json" language-label="JSON" :text.sync="json"></editor>
     </div>
+
+    <template v-if="schemaError || jsonError">
+        <p class="notice--danger" v-if="schemaError"><strong>Invalid schema:</strong> {{ schemaError }}</p>
+        <p class="notice--danger" v-if="jsonError"><strong>Failed to parse JSON:</strong> {{ jsonError }}</p>
+    </template>
+
+    <template v-if="!rootPatternDefined">
+        <p class="notice--info">
+            <strong>Schema doesn't define <code>Root</code> pattern:</strong> in general, JSON Blueprint schema
+            doesn't have to include a pattern named "Root" – it's just required by this tool to indicate which pattern
+            should be used to validate your JSON document.
+        </p>
+    </template>
+
+    <template v-if="validationResult &amp;&amp; validationResult.valid">
+        <p class="notice--success"><strong>✔ Valid</strong> JSON document according to schema</p>
+    </template>
+
+    <template v-if="validationResult &amp;&amp; !validationResult.valid">
+        <div class="validation-errors__container">
+            <p class="invalid"><strong>✖ {{ validationResult.errors.length }} validation error{{ validationResult.errors.length > 1 ? 's' : '' }}</strong></p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Path</th>
+                        <th>Error</th>
+                        <th>Pattern</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr is='error-row' v-for="error in validationResult.errors" :key="error.path" :error="error"></tr>
+                </tbody>
+            </table>
+        </div>
+    </template>
 </div>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.3/vue.js" type="text/javascript" charset="utf-8"></script>
+<script src="/assets/js/shapecheck.js" type="text/javascript" charset="utf-8"></script>
 <script src="/assets/js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
 
 <script type="text/x-template" id="sample-select">
@@ -35,8 +72,28 @@ author_profile: false
     </div>
 </script>
 
+<script type="text/x-template" id="error-row">
+    <tr>
+        <td><code>{{ error.path }}</code></td>
+        <td>
+            {{ error.message }}
+            <ul v-if="error.children &amp;&amp; error.children.length > 0">
+                <li v-for="child in error.children">{{ child.message }}</li>
+            </ul>
+        </td>
+        <td>
+            <code>{{ error.pattern }}</code>
+        </td>
+    </tr>
+</script>
+
 <script>
     var samples = [{
+        name: 'Array',
+        schema: 'Root = [Int, String(maxLength=5)]',
+        json: '["not an int", "string too long"]'
+    }, 
+    {
         name: 'Trivial',
         schema: 'Root = Boolean',
         json: 'true'
@@ -77,6 +134,20 @@ author_profile: false
         }
     })
 
+    var debounce = function(fn, wait) {
+        var scheduledExec = null
+        return function() {
+            if (scheduledExec) {
+                clearTimeout(scheduledExec)
+            }
+            var args = arguments
+            scheduledExec = setTimeout(function() {
+                scheduledExec = null
+                fn.apply(this, args)
+            }.bind(this), wait)
+        }
+    }
+
     Vue.component('editor', {
         template: '#editor',
         props: ['mode', 'text', 'languageLabel'],
@@ -91,17 +162,15 @@ author_profile: false
             var doc = session.getDocument()
 
             doc.on('change', function(e) {
-                if (this.clearTypingStatus) {
-                    clearTimeout(this.clearTypingStatus)
-                }
-                this.clearTypingStatus = setTimeout(function() {
-                    this.typing = false
-                    this.clearTypingStatus = null
-                }.bind(this), 10)
                 this.typing = true
-                
+                this.debouncedClearTypingStatus()
                 this.$emit('update:text', doc.getValue())
             }.bind(this))
+        },
+        methods: {
+            debouncedClearTypingStatus: debounce(function() {
+                this.typing = false
+            }, 10)
         },
         watch: {
             text: function(newVal) {
@@ -112,18 +181,55 @@ author_profile: false
         }
     })
 
+    Vue.component('error-row', {
+        template: '#error-row',
+        props: ['error']
+    })
+
     var app = new Vue({
         el: '#app',
         data: {
             samples: samples,
             schema: samples[0].schema,
-            json: samples[0].json
+            json: samples[0].json,
+            schemaError: null,
+            jsonError: null,
+            rootPatternDefined: true,
+            validationResult: null
+        },
+        mounted: function() {
+            this.runValidation()
         },
         methods: {
             showSample: function(sample) {
                 this.schema = sample.schema
                 this.json = sample.json
-            }
+            },
+
+            runValidation: debounce(function() {
+                this.validationResult = null
+                try {
+                    var validator = shapecheck.createValidator(this.schema)
+                    this.schemaError = null
+                    try {
+                        var json = JSON.parse(this.json)
+                        this.jsonError = null
+
+                        this.rootPatternDefined = validator.patternNames.indexOf('Root') >= 0
+                        if (this.rootPatternDefined) {
+                            this.validationResult = validator.validate('Root', json)
+                        }
+                    } catch (err) {
+                        this.jsonError = err.message
+                    }
+                } catch (err) {
+                    this.schemaError = err.message
+                }
+            }, 500)
+        },
+        watch: {
+            schema: 'runValidation',
+            json: 'runValidation'
         }
     })
 </script>
