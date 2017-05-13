@@ -89,18 +89,19 @@ author_profile: false
 
 <script>
     var samples = [{
-        name: 'Array',
-        schema: 'Root = [Int, String(maxLength=5)]',
-        json: '["not an int", "string too long"]'
-    }, 
+        name: 'Starter – example pre-loaded by default',
+        schema: 'Root = String',
+        json: '"A JSON value here - in this case a string as specified in the schema"'
+    },
     {
-        name: 'Trivial',
-        schema: 'Root = Boolean',
-        json: 'true'
-    }, {
-        name: 'Array',
-        schema: 'Root = [Int, String]',
-        json: '[42, "the ultimate answer"]'
+        name: 'YouTube API – video list',
+        schema: "Root = {\n    kind: \"youtube#videoListResponse\",\n    etag: String,\n    (nextPageToken: String)?,\n    (prevPageToken: String)?,\n    pageInfo: {\n        totalResults: Int,\n        resultsPerPage: Int\n    },\n    items: [$VideoDetail*]\n}\n\nVideoDetail = $VideoBase with {\n    contentDetails: {\n        duration: String,\n        dimension: \"2d\" | \"3d\",\n        definition: \"hd\" | \"sd\",\n        caption: \"true\" | \"false\",\n        licensedContent: Boolean,\n        projection: \"rectangular\" | \"360\",\n        (regionRestriction: {\n            (allowed: [String*]) | (blocked: [String*])\n        })?,\n        (hasCustomThumbnail: Boolean)?,\n        (contentRating: $ContentRating)?\n    }\n}\n\nVideoBase = {\n   kind: \"youtube#video\",\n   etag: String,\n   id: String\n}\n\nContentRating = {\n    (acbRating: \"acbC\" | \"acbE\" | \"acbG\" | \"acbM\" | \"acbMa15plus\" | \"acbP\" | \"acbPg\" | \"acbR18plus\" | \"acbUnrated\")?,\n    (agcomRating: \"agcomT\" | \"agcomUnrated\" | \"agcomVm14\" | \"agcomVm18\")?\n}",
+        json: "{\n \"kind\": \"youtube#videoListResponse\",\n \"etag\": \"\\\"m2yskBQFythfE4irbTIeOgYYfBU/MccUbeI32huyYZ7nOrtsbp6EUsc\\\"\",\n \"nextPageToken\": \"CAUQAA\",\n \"pageInfo\": {\n  \"totalResults\": 200,\n  \"resultsPerPage\": 5\n },\n \"items\": [\n  {\n   \"kind\": \"youtube#video\",\n   \"etag\": \"\\\"m2yskBQFythfE4irbTIeOgYYfBU/yeAibyQeUT0AuKm4CV1oYU2exUU\\\"\",\n   \"id\": \"xuCn8ux2gbs\",\n   \"contentDetails\": {\n    \"duration\": \"PT19M26S\",\n    \"dimension\": \"2d\",\n    \"definition\": \"hd\",\n    \"caption\": \"false\",\n    \"licensedContent\": false,\n    \"projection\": \"rectangular\"\n   }\n  },\n  {\n   \"kind\": \"youtube#video\",\n   \"etag\": \"\\\"m2yskBQFythfE4irbTIeOgYYfBU/OLM1-Jv-wtLz4zlXO6oiskBsXXU\\\"\",\n   \"id\": \"ewGAmiLuYCw\",\n   \"contentDetails\": {\n    \"duration\": \"PT6M21S\",\n    \"dimension\": \"2d\",\n    \"definition\": \"hd\",\n    \"caption\": \"true\",\n    \"licensedContent\": true,\n    \"projection\": \"rectangular\"\n   }\n  },\n  {\n   \"kind\": \"youtube#video\",\n   \"etag\": \"\\\"m2yskBQFythfE4irbTIeOgYYfBU/kDts2nTMllLHwIE3u9skGhZ7qfY\\\"\",\n   \"id\": \"LVKJfLbz5yQ\",\n   \"contentDetails\": {\n    \"duration\": \"PT10M3S\",\n    \"dimension\": \"2d\",\n    \"definition\": \"hd\",\n    \"caption\": \"false\",\n    \"licensedContent\": true,\n    \"projection\": \"rectangular\"\n   }\n  },\n  {\n   \"kind\": \"youtube#video\",\n   \"etag\": \"\\\"m2yskBQFythfE4irbTIeOgYYfBU/fgt_ss_Sg2_o23IsrItTPpQ-KBE\\\"\",\n   \"id\": \"OwJPPaEyqhI\",\n   \"contentDetails\": {\n    \"duration\": \"PT3M22S\",\n    \"dimension\": \"2d\",\n    \"definition\": \"hd\",\n    \"caption\": \"false\",\n    \"licensedContent\": true,\n    \"projection\": \"rectangular\"\n   }\n  },\n  {\n   \"kind\": \"youtube#video\",\n   \"etag\": \"\\\"m2yskBQFythfE4irbTIeOgYYfBU/klz687ioyE3Ujx2boKJZwzJZ4sI\\\"\",\n   \"id\": \"v70BsGolxKg\",\n   \"contentDetails\": {\n    \"duration\": \"PT9M10S\",\n    \"dimension\": \"2d\",\n    \"definition\": \"hd\",\n    \"caption\": \"true\",\n    \"licensedContent\": true,\n    \"regionRestriction\": {\n     \"blocked\": [\n      \"CA\",\n      \"AU\",\n      \"GB\"\n     ]\n    },\n    \"projection\": \"rectangular\"\n   }\n  }\n ]\n}\n"
+    },
+    {
+        name: 'package.json (npm manifest)',
+        schema: "Root = {\n    name: String(minLength = 1, maxLength = 214),\n    (version: String)?,\n    (description: String)?,\n    (keywords: [String*])?,\n    (homepage: String)?,\n    (bugs: String | {\n        (url: String)?,\n        (email: String)?\n    })?,\n    (license: String)?,\n    (licenses: [$License*])?,\n    (author: $Person)?,\n    (contributors: [$Person*])?,\n    (maintainers: [$Person*])?,\n    (files: [String*])?,\n    (main: String)?,\n    (bin: String | $StringMap)?,\n    (man: String | [String*])?,\n    (directories: $Directories)?,\n    (repository: String | [String*])?,\n    (scripts: $StringMap)?,\n    (config: $Config)?,\n\n    (dependencies: $Dependencies)?,\n    (devDependencies: $Dependencies)?,\n    (optionalDependencies: $Dependencies)?,\n    (peerDependencies: $Dependencies)?,\n\n    (engines: $StringMap)?,\n    (engineStrict: Boolean)?,\n    (os: [String*])?,\n    (cpu: [String*])?,\n    (preferGlobal: Boolean)?,\n    (private: Boolean)?,\n    (publishConfig: $Config)?,\n    (dist: {\n       (shasum: String)?,\n       (tarbal: String)?\n    })?,\n    (readme: String)?,\n    \n    (bundledDependency: [String*])?,\n    (scriptsInstallAfter: String)?,\n    (scriptsPublishAfter: String)?,\n    (scriptsRestart: String)?,\n    (scriptsStart: String)?,\n    (scriptsStop: String)?,\n    (scriptsTest: String)?,\n    (scriptsUninstallBefore: String)?,\n    (scriptsVersionBefore: String)?,\n    (String: Any)*\n}\n\nDependencies = {\n    (String: String)*\n}\n\nLicense = {\n    (type: String)?,\n    (url: String)?\n}\n\nPerson = String | {\n    name: String,\n    (url: String)?,\n    (email: String)?\n}\n\nDirectories = {\n    (bin: String)?,\n    (doc: String)?,\n    (example: String)?,\n    (lib: String)?,\n    (man: String)?,\n    (test: String)?\n}\n\nStringMap = {\n    (String: String)*\n}\n\nConfig = {\n    (String: Any)*\n}",
+        json: "{ \n    \"name\": \"ethopia-waza\",\n    \"description\": \"a delightfully fruity coffee varietal\",\n    \"version\": \"1.2.3\",\n    \"devDependencies\": {\n        \"coffee-script\": \"~1.6.3\"\n    },\n    \"scripts\": {\n        \"prepare\": \"coffee -o lib/ -c src/waza.coffee\"\n    },\n    \"main\": \"lib/waza.js\"\n}"
     }]
 
     Vue.component('sample-select', {
@@ -155,22 +156,21 @@ author_profile: false
             var editorEl = $('.editor', this.$el)[0]
             this.ace = ace.edit(editorEl)
             this.ace.$blockScrolling = Infinity
-            this.ace.setTheme('ace/theme/idle_fingers')
+            this.ace.setTheme('ace/theme/monokai')
             
             var session = this.ace.getSession();
             session.setMode(this.mode)
             var doc = session.getDocument()
+
+            this.debouncedClearTypingStatus = debounce(function() {
+                this.typing = false
+            }, 10)
 
             doc.on('change', function(e) {
                 this.typing = true
                 this.debouncedClearTypingStatus()
                 this.$emit('update:text', doc.getValue())
             }.bind(this))
-        },
-        methods: {
-            debouncedClearTypingStatus: debounce(function() {
-                this.typing = false
-            }, 10)
         },
         watch: {
             text: function(newVal) {

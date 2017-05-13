@@ -5,7 +5,7 @@ excerpt: "Validation of JSON arrays."
 last_modified_at: 2017-04-30T13:36:43+01:00
 ---
 
-This section is a reference for patterns of scalar JSON values: boolean, string, number and null
+In this section, we'll look at patterns for JSON arrays.
 
 {% include toc %}
 
@@ -48,4 +48,4 @@ Combining all of what we've learned so far, you can create some trully fear-indu
 ```
 This otherworldly creation would match an array starting with a natural number, followed by zero or many identifiers, followed optionally by an integer and either boolean or string.
 
-You can still kind of read it, but should you ever need something like this? You know the answer...
+You can still kind of read it, but should you ever need something like this?

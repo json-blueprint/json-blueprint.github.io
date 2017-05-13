@@ -2,7 +2,7 @@
 main:
   - title: "Documentation"
     url: /docs/quick-start-guide/
-  - title: "Validator"
+  - title: "Online Validator"
     url: /validator
   # - title: "About"
   #   url: https://mmistakes.github.io/minimal-mistakes/about/
@@ -25,3 +25,9 @@ docs:
         url: /docs/scalar/
       - title: "Matching Arrays"
         url: /docs/array/
+      - title: "Matching Objects"
+        url: /docs/object/  
+  - title: "Comparisons"
+    children:
+      - title: "JSON Schema"
+        url: /docs/vs-json-schema/

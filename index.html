@@ -1,4 +1,61 @@
 ---
-layout: home
-author_profile: true
+layout: splash
+permalink: /
+header:
+  overlay_color: "#5e616c"
+  overlay_image: /assets/images/mm-home-page-feature.jpg
+  cta_label: "<i class='fa fa-book'></i> Learn More"
+  cta_url: "/docs/quick-start-guide/"
+  caption:
+excerpt: "A simple schema language for JSON documents. With DSL that's easy to read and author."
 ---
+
+<div class="feature__wrapper">
+    <div class="feature__item">
+        
+<div class="highlighter-rouge language-json">
+<pre class="highlight">
+<code><span class="nx">Video</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="na">id</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span><span class="w">
+  </span><span class="na">dimension</span><span class="p">:</span><span class="w"> </span><span class="s2">"2d"</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">"3d"</span><span class="p">,</span><span class="w">
+  </span><span class="na">definition</span><span class="p">:</span><span class="w"> </span><span class="s2">"hd"</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">"sd"</span><span class="p">,</span><span class="w">
+  </span><span class="p">(</span><span class="na">hasThumbnail</span><span class="p">:</span><span class="w"> </span><span class="nb">Boolean</span><span class="p">)</span><span class="o">?</span><span class="w">
+</span><span class="p">}</span></code>     
+</pre>
+</div>
+
+        <h2>Readable</h2>
+        <p>
+            Consists of patterns that closely resemble matching JSON documents.
+        </p> 
+    </div>
+
+    <div class="feature__item">
+
+<div class="highlighter-rouge language-json">
+<pre class="highlight">
+<code><span class="nx">ProbablyPerson</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="na">firstName</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="na">lastName</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="sr">//</span><span class="w"> </span><span class="nx">any</span><span class="w"> </span><span class="nx">other</span><span class="w"> </span><span class="nx">properties</span><span class="w">
+  </span><span class="p">(</span><span class="na">String</span><span class="p">:</span><span class="w"> </span><span class="nx">Any</span><span class="p">)</span><span class="o">*</span><span class="w">
+</span><span class="p">}</span></code>
+</pre>
+</div>
+
+        <h2>Strict</h2>
+        <p>
+            Strict by default, allowing you to explicitly opt-out when you need it.
+        </p>
+    </div>
+</div>
+
+<div class="feature__wrapper">
+    <div class="feature__item--center">
+        <h2>Acknowledgement</h2>
+        <p>
+            JSON Blueprint is heavily inspired by <a href="http://relaxng.org/">RELAX NG</a>. If you ever find yourself in need 
+            of XML validator, be sure to check it out.
+        </p>
+    </div>
+</div>
