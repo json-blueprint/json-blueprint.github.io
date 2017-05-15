@@ -109,7 +109,3 @@ With JSON Schema, you're always one typo away from making your schema more relax
 With JSON Blueprint, most schema errors should be caught by the parser. Although this depends on quality of given parser, even if some error passes through, it will probably trigger validation error as JSON Blueprint is strict by default.
 
 # Strictness
-
-# Expressivity 
-
-# Toolability

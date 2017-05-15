@@ -8,7 +8,9 @@ author_profile: false
 {% raw  %}
 
 <div id="app">
-    <p><sample-select :samples="samples" @selected="showSample" /></p>
+    <template v-if="true">
+        <p><sample-select :samples="samples" @selected="showSample"></sample-select> <span class="samples-note">take inspiration from some sample schema, then roll your own</span></p>
+    </template>
 
     <div class="editors">
         <editor mode="ace/mode/json_blueprint" language-label="JSON Blueprint" :text.sync="schema"></editor>
