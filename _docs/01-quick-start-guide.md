@@ -132,4 +132,4 @@ The `IntTree` pattern above would match for example:
 ```
 
 ## Next Steps
-Learn more about patterns for [scalar values](/docs/scalar/), [arrays](/docs/array/) or [objects](/docs/object/). You can also check some sample schemas and try creating your own using our [online validator](/validator/).
+Learn more about patterns for [scalar values](/docs/scalar/), [arrays](/docs/array/) or [objects](/docs/object/). You can also check some sample schemas and try creating your own using our [online validator](/validator).
