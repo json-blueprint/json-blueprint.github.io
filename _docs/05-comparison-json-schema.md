@@ -26,9 +26,11 @@ On the other hand, this representation is not very expressive. You can see the d
 
 <div class="code-sample" markdown="1">
 <p class="language">JSON Blueprint</p>
-```json-blueprint
-"foo"
-```
+<div class="highlighter-rouge language-json">
+<pre class="highlight">
+<code><span class="s2">"foo"</span></code>
+</pre>
+</div>
 </div>
 </div>
 
@@ -60,13 +62,15 @@ In this simple case, the "syntactic overhead" of JSON Schema is relatively minor
 
 <div class="code-sample" markdown="1">
 <p class="language">JSON Blueprint</p>
-```json-blueprint
-{
-  id: Int(min = 0),
-  name: String,
-  (tags: [String*])?
-}
-```
+<div class="highlighter-rouge language-json">
+<pre class="highlight">
+<code><span class="p">{</span><span class="w">
+  </span><span class="na">id</span><span class="p">:</span><span class="w"> </span><span class="nb">Int</span><span class="p">(</span><span class="nx">min</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span><span class="w">
+  </span><span class="na">name</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span><span class="w">
+  </span><span class="p">(</span><span class="na">tags</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="nb">String</span><span class="o">*</span><span class="p">])</span><span class="o">?</span><span class="w">
+</span><span class="p">}</span></code>
+</pre>
+</div>
 </div>
 </div>
 

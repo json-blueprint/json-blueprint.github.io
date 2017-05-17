@@ -30,6 +30,24 @@ excerpt: "A simple yet powerful schema language for JSON"
     </div>
 
     <div class="feature__item">
+        <h2>Simple</h2>
+        <p>
+            Just a handful of constructs that can be combined in powerful ways.
+        </p>
+
+<div class="highlighter-rouge language-json">
+<pre class="highlight">
+<code><span class="nx">Id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Int</span><span class="p">(</span><span class="nx">min</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nb">String</span><span class="w">
+</span><span class="nx">Resource</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="na">id</span><span class="p">:</span><span class="w"> </span><span class="nv">$Id</span><span class="p">,</span><span class="w">
+  </span><span class="p">(</span><span class="na">references</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="nv">$Id</span><span class="o">*</span><span class="p">])</span><span class="w"> </span><span class="o">|</span><span class="w">
+  </span><span class="p">(</span><span class="na">embedded</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="nv">$Resource</span><span class="o">*</span><span class="p">])</span><span class="w">
+</span><span class="p">}</span></code>
+</pre>
+</div>
+    </div>
+
+    <div class="feature__item">
         <h2>Strict</h2>
         <p>
             Strict by default, allowing you to explicitly opt-out when you need it.
