@@ -1,6 +1,6 @@
 ---
 title: "Matching Arrays"
-permalink: /docs/array/
+permalink: /docs/array
 excerpt: "Validation of JSON arrays."
 last_modified_at: 2017-05-15T21:50:00+02:00
 ---

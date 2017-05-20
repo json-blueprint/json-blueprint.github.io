@@ -1,6 +1,6 @@
 ---
 title: "Matching Objects"
-permalink: /docs/object/
+permalink: /docs/object
 excerpt: "Validation of JSON objects."
 last_modified_at: 2017-05-15T23:30:00+02:00
 ---

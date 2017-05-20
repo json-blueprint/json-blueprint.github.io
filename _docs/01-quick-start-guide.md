@@ -1,6 +1,6 @@
 ---
 title: "Quick-Start Guide"
-permalink: /docs/quick-start-guide/
+permalink: /docs/quick-start-guide
 excerpt: "Introduction to basic concepts of JSON Blueprint."
 last_modified_at: 2017-05-15T21:30:00+02:00
 ---
@@ -132,4 +132,4 @@ The `IntTree` pattern above would match for example:
 ```
 
 ## Next Steps
-Learn more about patterns for [scalar values](/docs/scalar/), [arrays](/docs/array/) or [objects](/docs/object/). You can also check some sample schemas and try creating your own using our [online validator](/validator).
+Learn more about patterns for [scalar values](/docs/scalar), [arrays](/docs/array) or [objects](/docs/object). You can also check some sample schemas and try creating your own using our [online validator](/validator).

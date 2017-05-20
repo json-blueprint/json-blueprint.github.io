@@ -1,16 +1,25 @@
 ---
 title: "Comparison with JSON Schema"
-permalink: /docs/vs-json-schema/
+permalink: /docs/vs-json-schema
 excerpt: "Comparison of JSON Blueprint with JSON Schema."
-last_modified_at: 2017-04-30T13:36:43+01:00
+last_modified_at: 2017-05-21T01:00:00+02:00
 ---
-
-[JSON Schema](http://json-schema.org/) is a JSON-based format for describing the structure of JSON data. I'll discuss main differences between JSON Schema and JSON Blueprint.
 
 {% include toc %}
 
+[JSON Schema](http://json-schema.org/) is a JSON-based format for describing the structure of JSON data. We'll discuss main differences between JSON Schema and JSON Blueprint.
+
+## TLDR
+
+| JSON Schema                         | JSON Blueprint                |
+| ----------------------------------- | ----------------------------- |
+| tooling-friendly (JSON format)      | human-friendly (external DSL) |
+| extensive tooling support           | not much tooling (yet)        |
+| mature                              | new and potentially unstable  |
+| permissive by default               | strict by default             |
+
 ## Expressivity
-JSON Schema is a JSON-based data format. It encodes information about structure of JSON data in JSON itself. That has one obvious advantage – you can use existing JSON tools to work with it.
+JSON Schema is a JSON-based data format. It encodes information about the structure of JSON data in JSON itself. That has one obvious advantage – you can use existing JSON tools to work with it.
 
 On the other hand, this representation is not very expressive. You can see the difference even on some very simple examples. Let's see how you'd match a JSON string `"foo"` in both languages:
 
@@ -74,7 +83,7 @@ In this simple case, the "syntactic overhead" of JSON Schema is relatively minor
 </div>
 </div>
 
-Also note that in case of JSON Schema, the information whether given object property is required or optional is pretty far away from the definition of property itself.
+Also note that in the case of JSON Schema, the information whether given object property is required or optional is pretty far away from the definition of the property itself.
 
 JSON Blueprint closely mirrors the structure of validated documents. Combined with the terse syntax, you can parse most of the information quickly. That is if you don't hate regular expressions with a passion, as we borrow a few syntactic constructs from them.
 
@@ -83,33 +92,25 @@ Let's consider the following simple JSON Schema:
 
 ```json
 {
-  "type": "object",
-  "items": {
+  "typo": "object",
+  "properties": {
     "name": { "type": "string" },
-    "age": { "type": "string" }
-  }
+    "age": { "type": "integer" }
+  },
+  "required": ["name", "age"]
 }
 ```
 
-Although it's perfectly valid, it probably doesn't do what you'd expect on first look. It says we require value of type `object`, but uses the `items` keyword which only works with arrays. You can still use this schema, but it would allow any object. 
+Glancing over it, it seems that it only matches objects with `name` and `age`. If you read through the schema carefully, you may have noticed a typo (`typo` instead of `type`). Does it make the schema invalid? No, in fact, the schema is perfectly valid. However, it doesn't do what you expect. It would also match any non-object value (string, integer, any array...). 
 
-To fix this, we may change the `items` keyword to `properties`. Such Schema would match an object with optional `name` and `age`. But let's say we wanted to validate an array in the first place:
+That's because JSON Schema allows any non-keyword (`type`, `properties` and `required` are examples of keyword properties) to be used in the schema with any value. Additionally, a lot of keywords, including `properties` and `required`, only apply to a specific type of JSON value. Finally, empty JSON schema allows anything.
 
-```json
-{
-  "type": "array",
-  "items": {
-    "name": { "type": "string" },
-    "age": { "type": "string" }
-  }
-}
-```
-
-This is again a valid schema. Value of `items` is a schema for each array item, so might look like it would match an array of objects with `name` and `age`. But in reality, any array would pass. That's because to validate object properties, one would have to wrap them in the `properties` keyword. The problem is that any non-keyword property is allowed to appear in the Schema with any value.
-
-With JSON Schema, you're always one typo away from making your schema more relaxed than you'd want to.
+With JSON Schema, you're always one typo away from making your schema more permissive than you'd want to.
 {: .notice--warning}
 
-With JSON Blueprint, most schema errors should be caught by the parser. Although this depends on quality of given parser, even if some error passes through, it will probably trigger validation error as JSON Blueprint is strict by default.
+With JSON Blueprint, most schema errors should be caught by the parser. Although this depends on the quality of given parser, even if some error passes through, it will probably trigger validation error as JSON Blueprint is strict by default.
 
 # Strictness
+An empty JSON Schema (`{}`) matches any JSON value. In JSON Blueprint, the `{}` pattern would match an empty object and nothing else. This illustrates one fundamental difference between the two – by default, Schema is permissive and Blueprint is strict. You can still allow any value in Blueprint, but you have to be explicit about it: `Any`
+
+There might be situations where strictness is not desirable and leads to unnecessary boilerplate. One example – in a schema for REST API payloads, you may want to always allow additional properties in any object to allow for forward compatibility. Cases like this should be covered by a global flag offered by the validator.

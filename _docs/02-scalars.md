@@ -1,6 +1,6 @@
 ---
 title: "Matching Scalar Values"
-permalink: /docs/scalar/
+permalink: /docs/scalar
 excerpt: "Validation of scalar JSON values."
 last_modified_at: 2017-05-15T21:40:00+02:00
 ---
