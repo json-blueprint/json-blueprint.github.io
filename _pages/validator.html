@@ -47,7 +47,7 @@ author_profile: false
                     </tr>
                 </thead>
                 <tbody>
-                    <tr is='error-row' v-for="error in validationResult.errors" :key="error.path" :error="error"></tr>
+                    <tr is='error-row' v-for="error in validationResult.errors" :key="error.pathString" :error="error"></tr>
                 </tbody>
             </table>
         </div>
@@ -76,7 +76,7 @@ author_profile: false
 
 <script type="text/x-template" id="error-row">
     <tr>
-        <td><code>{{ error.path }}</code></td>
+        <td><code>{{ error.pathString }}</code></td>
         <td>
             {{ error.message }}
             <ul v-if="error.children &amp;&amp; error.children.length > 0">
@@ -84,7 +84,7 @@ author_profile: false
             </ul>
         </td>
         <td>
-            <code>{{ error.pattern }}</code>
+            <code>{{ error.patternString }}</code>
         </td>
     </tr>
 </script>
