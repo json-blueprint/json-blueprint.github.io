@@ -121,6 +121,9 @@ author_profile: false
             select: function(sample) {
                 this.isOpen = false
                 this.$emit('selected', sample)
+                if (window.ga) {
+                    ga('send', 'event', 'Sample', 'select', sample.name)
+                }
             }
         },
         mounted: function() {
